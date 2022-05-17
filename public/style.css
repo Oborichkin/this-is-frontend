@@ -1,0 +1,9 @@
+.rfc-scheme {
+    font-family: monospace;
+}
+
+.request {
+    background-color: #F44336;
+    padding: 5px;
+    border-radius: 5px;
+}
