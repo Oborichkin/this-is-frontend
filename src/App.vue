@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// import SearchView from './components/SearchView.vue';
 import RfcView from './components/RfcView';
 
 export default {
@@ -12,6 +13,7 @@ export default {
 
   components: {
     RfcView,
+    // SearchView
   },
 
   data: () => ({

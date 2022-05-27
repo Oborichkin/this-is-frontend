@@ -2,8 +2,19 @@
     font-family: monospace;
 }
 
-.request {
-    background-color: #F44336;
+.entity {
     padding: 5px;
     border-radius: 5px;
+    border: 1px dotted #F44336;
+}
+
+.entity:hover {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #F44336;
+    border: 1px solid #F44336;
+}
+
+.searchResult {
+    margin-bottom: 2em;
 }

@@ -18,7 +18,13 @@
           <a :id="ch.title"></a>
           <h2>{{ ch.title }}</h2>
           <p v-for="section in ch.sections" v-bind:key="section">
-            <span v-if="section.type == 'text'" v-html="highlightRequests(section.text)"></span>
+            <Highlighter class="my-highlight"
+              v-if="section.type == 'text'" 
+              highlightClassName="highlight"
+              :highlightTag="mark"
+              :searchWords="entities"
+              :autoEscape="true"
+              :textToHighlight="section.text"/>
             <span class="rfc-scheme" v-else style="white-space: pre">{{
               section.text
             }}</span>
@@ -31,19 +37,24 @@
 
 <script>
 import axios from "axios";
+import Highlighter from 'vue-highlight-words'
+import EntityMark from './Entity.vue'
 
 export default {
   name: "RfcView",
 
+  components: {
+    Highlighter
+  },
+
   data: () => ({
     rfc: null,
-    requests: [
-      "INVITE", "OPTIONS", "BYE", "OPTIONS", "MESSAGE"
-    ],
+    entities: null,
     errors: [],
+    mark: EntityMark,
     highlightRequests(text) {
-      for (const request of this.requests) {
-        text = text.replace(request, `<span onClick="alert(${request})" class='request'>${request}</span>`)
+      for (const entity of this.entities) {
+        text = text.replace(` ${entity} `, ` <span @click="test" class='entity'>${entity}</span> `)
       }
       return text
     }
@@ -58,6 +69,15 @@ export default {
       .catch((e) => {
         this.errors.push(e);
       });
+    axios
+      .get("http://localhost:8000/entities")
+      .then((response) => {
+        this.entities = response.data;
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
   },
 };
+
 </script>
